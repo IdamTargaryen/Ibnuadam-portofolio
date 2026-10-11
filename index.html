@@ -75,21 +75,6 @@
         ::-webkit-scrollbar-thumb { background: #1e2d5a; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
     </style>
-    <script>
-        document.addEventListener('error', event => {
-            const image = event.target;
-            if (!(image instanceof HTMLImageElement) || image.dataset.rootFallbackAttempted) return;
-
-            const imageUrl = new URL(image.src, document.baseURI);
-            if (imageUrl.origin !== window.location.origin) return;
-
-            const filename = imageUrl.pathname.split('/').pop();
-            if (!filename) return;
-
-            image.dataset.rootFallbackAttempted = 'true';
-            image.src = new URL(filename, document.baseURI).href;
-        }, true);
-    </script>
 </head>
 <body class="bg-gis-dark text-slate-100 transition-colors duration-300 light:bg-slate-50 light:text-slate-800 relative">
 
@@ -365,12 +350,12 @@
 
             <!-- Filter Buttons -->
             <div class="flex flex-wrap justify-center gap-2 mb-12">
-                <button onclick="filterProjects('all')" class="project-filter-btn active-filter px-4 py-2 rounded-lg text-sm font-medium transition bg-emerald-500 text-slate-950">All Projects</button>
-                <button onclick="filterProjects('webgis')" class="project-filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gis-cardDark light:bg-white text-slate-300 light:text-slate-700 border border-gis-borderDark light:border-slate-300 hover:border-emerald-500">WebGIS Apps</button>
-                <button onclick="filterProjects('field-survey')" class="project-filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gis-cardDark light:bg-white text-slate-300 light:text-slate-700 border border-gis-borderDark light:border-slate-300 hover:border-emerald-500">Field Survey</button>
-                <button onclick="filterProjects('remote-sensing')" class="project-filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gis-cardDark light:bg-white text-slate-300 light:text-slate-700 border border-gis-borderDark light:border-slate-300 hover:border-emerald-500">Remote Sensing & Drone</button>
-                <button onclick="filterProjects('spatial-analytics')" class="project-filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gis-cardDark light:bg-white text-slate-300 light:text-slate-700 border border-gis-borderDark light:border-slate-300 hover:border-emerald-500">Spatial Analytics</button>
-                <button onclick="filterProjects('professional-experience')" class="project-filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gis-cardDark light:bg-white text-slate-300 light:text-slate-700 border border-gis-borderDark light:border-slate-300 hover:border-emerald-500">Professional Experience</button>
+                <button onclick="filterProjects('all', event)" class="project-filter-btn active-filter px-4 py-2 rounded-lg text-sm font-medium transition bg-emerald-500 text-slate-950">All Projects</button>
+                <button onclick="filterProjects('webgis', event)" class="project-filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gis-cardDark light:bg-white text-slate-300 light:text-slate-700 border border-gis-borderDark light:border-slate-300 hover:border-emerald-500">WebGIS Apps</button>
+                <button onclick="filterProjects('field-survey', event)" class="project-filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gis-cardDark light:bg-white text-slate-300 light:text-slate-700 border border-gis-borderDark light:border-slate-300 hover:border-emerald-500">Field Survey</button>
+                <button onclick="filterProjects('remote-sensing', event)" class="project-filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gis-cardDark light:bg-white text-slate-300 light:text-slate-700 border border-gis-borderDark light:border-slate-300 hover:border-emerald-500">Remote Sensing & Drone</button>
+                <button onclick="filterProjects('spatial-analytics', event)" class="project-filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gis-cardDark light:bg-white text-slate-300 light:text-slate-700 border border-gis-borderDark light:border-slate-300 hover:border-emerald-500">Spatial Analytics</button>
+                <button onclick="filterProjects('professional-experience', event)" class="project-filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gis-cardDark light:bg-white text-slate-300 light:text-slate-700 border border-gis-borderDark light:border-slate-300 hover:border-emerald-500">Professional Experience</button>
             </div>
 
             <!-- Project Cards Grid -->
@@ -379,7 +364,7 @@
                 <!-- Project 1 -->
                 <div class="project-card bg-gis-cardDark light:bg-white rounded-xl border border-gis-borderDark light:border-slate-200 overflow-hidden hover:border-gis-accent transition duration-300 flex flex-col" data-category="webgis">
                     <div class="relative h-52 bg-slate-950 overflow-hidden group">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Geospatial asset management dashboard" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                        <img src="Screenshot%202026-10-09%20172011_edited.png" alt="Geospatial asset management dashboard" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-90">
                         <div class="absolute inset-0 bg-gradient-to-t from-gis-cardDark via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-emerald-500/90 text-slate-950 font-mono text-xs px-2.5 py-1 rounded font-bold">WebGIS App</span>
                     </div>
@@ -404,7 +389,7 @@
                 <!-- Project 2 -->
                 <div class="project-card bg-gis-cardDark light:bg-white rounded-xl border border-gis-borderDark light:border-slate-200 overflow-hidden hover:border-gis-accent transition duration-300 flex flex-col" data-category="remote-sensing">
                     <div class="relative h-52 bg-slate-950 overflow-hidden group">
-                        <img src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=800&q=80" alt="River Buffer & Tree Count" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                        <img src="WhatsApp%20Image%202026-10-09%20at%2016.18.28.jpeg" alt="River Buffer & Tree Count" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
                         <div class="absolute inset-0 bg-gradient-to-t from-gis-cardDark via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-teal-500/90 text-slate-950 font-mono text-xs px-2.5 py-1 rounded font-bold">Remote Sensing</span>
                     </div>
@@ -429,7 +414,7 @@
                 <!-- Project 8: Hotspot and Wind Analysis -->
                 <div class="project-card bg-gis-cardDark light:bg-white rounded-xl border border-gis-borderDark light:border-slate-200 overflow-hidden hover:border-gis-accent transition duration-300 flex flex-col" data-category="remote-sensing">
                     <div class="relative h-52 bg-slate-950 overflow-hidden group">
-                        <img src="Fire%20Hotspot%20dan%20ERA5/Hotspot.png" alt="Fire hotspot visualization" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                        <img src="Hotspot.png" alt="Fire hotspot visualization" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
                         <div class="absolute inset-0 bg-gradient-to-t from-gis-cardDark via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-teal-500/90 text-slate-950 font-mono text-xs px-2.5 py-1 rounded font-bold">Remote Sensing</span>
                     </div>
@@ -454,7 +439,7 @@
                 <!-- Project 4 -->
                 <div class="project-card bg-gis-cardDark light:bg-white rounded-xl border border-gis-borderDark light:border-slate-200 overflow-hidden hover:border-gis-accent transition duration-300 flex flex-col" data-category="field-survey">
                     <div class="relative h-52 bg-slate-950 overflow-hidden group">
-                        <img src="Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2015.55.44.jpeg" alt="Community and Green Space Field Survey" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                        <img src="WhatsApp%20Image%202026-10-09%20at%2015.55.44.jpeg" alt="Community and Green Space Field Survey" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
                         <div class="absolute inset-0 bg-gradient-to-t from-gis-cardDark via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-amber-500/90 text-slate-950 font-mono text-xs px-2.5 py-1 rounded font-bold">Field Survey</span>
                     </div>
@@ -480,7 +465,7 @@
                 <!-- Project 5: Research -->
                 <div class="project-card bg-gis-cardDark light:bg-white rounded-xl border border-gis-borderDark light:border-slate-200 overflow-hidden hover:border-gis-accent transition duration-300 flex flex-col" data-category="spatial-analytics">
                     <div class="relative h-52 bg-slate-950 overflow-hidden group">
-                        <img src="Research%20Project/Peta%20Persebaran%20Pemukiman.png" alt="Remote Sensing and GIS Research" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                        <img src="Peta%20Persebaran%20Pemukiman.png" alt="Remote Sensing and GIS Research" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
                         <div class="absolute inset-0 bg-gradient-to-t from-gis-cardDark via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-amber-500/90 text-slate-950 font-mono text-xs px-2.5 py-1 rounded font-bold">Spatial Analytics</span>
                     </div>
@@ -506,7 +491,7 @@
                 <!-- Project 6: Plantation GIS -->
                 <div class="project-card bg-gis-cardDark light:bg-white rounded-xl border border-gis-borderDark light:border-slate-200 overflow-hidden hover:border-gis-accent transition duration-300 flex flex-col" data-category="spatial-analytics">
                     <div class="relative h-52 bg-slate-950 overflow-hidden group">
-                        <img src="Plantation%20%26%20GIS/WhatsApp%20Image%202026-10-09%20at%2016.18.28.jpeg" alt="Plantation GIS Data Quality and Cadastral Mapping" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                        <img src="WhatsApp%20Image%202026-10-09%20at%2016.18.28.jpeg" alt="Plantation GIS Data Quality and Cadastral Mapping" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
                         <div class="absolute inset-0 bg-gradient-to-t from-gis-cardDark via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-amber-500/90 text-slate-950 font-mono text-xs px-2.5 py-1 rounded font-bold">Spatial Analytics</span>
                     </div>
@@ -532,7 +517,7 @@
                 <!-- Project 7: Fire Risk Indices -->
                 <div class="project-card bg-gis-cardDark light:bg-white rounded-xl border border-gis-borderDark light:border-slate-200 overflow-hidden hover:border-gis-accent transition duration-300 flex flex-col" data-category="spatial-analytics">
                     <div class="relative h-52 bg-slate-950 overflow-hidden group">
-                        <img src="Indeks%20Kebakaran/Indeks%20Kebakaran%20Kalimantan_1.jpg" alt="Fire hazard index map of Kalimantan" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                        <img src="Indeks%20Kebakaran%20Kalimantan_1.jpg" alt="Fire hazard index map of Kalimantan" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
                         <div class="absolute inset-0 bg-gradient-to-t from-gis-cardDark via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-red-500/90 text-white font-mono text-xs px-2.5 py-1 rounded font-bold">Spatial Analytics</span>
                     </div>
@@ -557,7 +542,7 @@
                 <!-- Project 9: Geology Speaker -->
                 <div class="project-card bg-gis-cardDark light:bg-white rounded-xl border border-gis-borderDark light:border-slate-200 overflow-hidden hover:border-gis-accent transition duration-300 flex flex-col" data-category="professional-experience">
                     <div class="relative h-52 bg-slate-950 overflow-hidden group">
-                        <img src="Lecturer/WhatsApp%20Image%202026-10-09%20at%2016.01.01.jpeg" alt="Guest lecture and educational presentation" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                        <img src="WhatsApp%20Image%202026-10-09%20at%2016.01.01.jpeg" alt="Guest lecture and educational presentation" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
                         <div class="absolute inset-0 bg-gradient-to-t from-gis-cardDark via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-purple-500/90 text-white font-mono text-xs px-2.5 py-1 rounded font-bold">Speaker & Lecturer</span>
                     </div>
@@ -582,7 +567,7 @@
                 <!-- Project 10: Neo Mapper GIS Content Creator -->
                 <div class="project-card bg-gis-cardDark light:bg-white rounded-xl border border-gis-borderDark light:border-slate-200 overflow-hidden hover:border-gis-accent transition duration-300 flex flex-col" data-category="professional-experience">
                     <div class="relative h-52 bg-slate-950 overflow-hidden group">
-                        <img src="Neo%20Mapper/Screenshot%202026-10-09%20174024_edited.png" alt="Digital geospatial content creation" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                        <img src="Screenshot%202026-10-09%20174024_edited.png" alt="Digital geospatial content creation" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
                         <div class="absolute inset-0 bg-gradient-to-t from-gis-cardDark via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-gis-accent text-slate-950 font-mono text-xs px-2.5 py-1 rounded font-bold">GIS Content Creator</span>
                     </div>
@@ -980,16 +965,18 @@
                 desc: "I developed a WebGIS application for real-time asset registration, field verification, and spatial query reporting. I automated spatial overlay checks and custom vector layer analysis to flag potential conflicts, including land parcels overlapping forest areas and other restricted zones, so they could be addressed before becoming future issues.",
                 results: "My work increased field audit efficiency by 40%, enabled instant geospatial data access across multi-disciplinary teams, and helped prevent future spatial conflicts through automated overlay analysis.",
                 images: [
-                    { src: "WebGIS/Screenshot%202026-10-09%20172011_edited.png", alt: "WebGIS application screenshot" },
-                    { src: "WebGIS/Screenshot%202026-10-09%20172011_edited.png", alt: "WebGIS application map and interface" },
-                    { src: "WebGIS/Belajar%20WEBGIS%20Visual%20Studio%20Code.png", alt: "WebGIS development workspace" }
+                    { src: "Screenshot%202026-10-09%20172011_edited.png", alt: "WebGIS application screenshot" },
+                    { src: "Belajar%20WEBGIS%20Visual%20Studio%20Code.png", alt: "WebGIS development workspace" }
                 ]
             },
             project2: {
                 title: "River Buffer Zone & Plantation Tree Counting Analysis",
                 tech: "Drone Photogrammetry, Agisoft Metashape, QGIS, High-Res Orthomosaic",
                 desc: "Executed high-resolution drone mapping over plantation zones in Sekadau, West Kalimantan. Analyzed river buffer zone conservation compliance and implemented automated tree canopy isolation algorithms.",
-                results: "Accurately mapped 2,500+ hectares with 98% precision tree stand counts."
+                results: "Accurately mapped 2,500+ hectares with 98% precision tree stand counts.",
+                images: [
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.18.28.jpeg", alt: "Plantation drone orthomosaic" }
+                ]
             },
             project4: {
                 title: "Community Needs & Green Open Space Surveys",
@@ -997,16 +984,16 @@
                 desc: "I conducted field data collection to support drinking water supply system planning, including by-name/by-address surveys and real demand surveys. I also carried out qualitative field surveys of urban green open spaces.",
                 results: "Collected structured household and community-level information to support drinking water supply planning and qualitative assessment of green open spaces.",
                 images: [
-                    { src: "Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2015.55.44.jpeg", alt: "Community needs field survey" },
-                    { src: "Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2015.55.44%20%281%29.jpeg", alt: "Field survey documentation" },
-                    { src: "Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2015.56.16.jpeg", alt: "Field survey documentation" },
-                    { src: "Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2016.03.05.jpeg", alt: "Field survey documentation" },
-                    { src: "Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2016.03.06.jpeg", alt: "Field survey documentation" },
-                    { src: "Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2016.03.29.jpeg", alt: "Field survey documentation" },
-                    { src: "Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2016.03.49.jpeg", alt: "Field survey documentation" },
-                    { src: "Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2016.04.12.jpeg", alt: "Field survey documentation" },
-                    { src: "Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2016.04.56.jpeg", alt: "Field survey documentation" },
-                    { src: "Community%20Needs%20%26%20Green%20Open%20Space%20Surveys/WhatsApp%20Image%202026-10-09%20at%2016.05.33.jpeg", alt: "Field survey documentation" }
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2015.55.44.jpeg", alt: "Community needs field survey" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2015.55.44%20(1).jpeg", alt: "Field survey documentation" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2015.56.16.jpeg", alt: "Field survey documentation" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.03.05.jpeg", alt: "Field survey documentation" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.03.06.jpeg", alt: "Field survey documentation" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.03.29.jpeg", alt: "Field survey documentation" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.03.49.jpeg", alt: "Field survey documentation" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.04.12.jpeg", alt: "Field survey documentation" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.04.56.jpeg", alt: "Field survey documentation" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.05.33.jpeg", alt: "Field survey documentation" }
                 ]
             },
             project5: {
@@ -1015,11 +1002,11 @@
                 desc: "I successfully conducted the research “Analysis of Settlement Distribution in Various Zones of Semeru Volcano Disaster-Prone Areas in Pronojiwo District, Lumajang Regency.” I also contributed to research on using Landsat 8 to monitor land-use change in Greater Jakarta, assisted with remote sensing and GIS analysis to identify buffer zone areas around Plumpang Fuel Depot, and supported data processing and interpretation for identifying land-use change on rice fields in Tangerang District using Landsat 8 imagery.",
                 results: "My research and contributions supported spatial analysis of settlement distribution in disaster-prone areas, land-use change monitoring, fuel depot buffer zone identification, and rice-field change interpretation.",
                 images: [
-                    { src: "Research%20Project/Peta%20Kawasan%20Rawan%20Bencana%20Gunung%20Api%20Semeru.png", alt: "Semeru volcano disaster-prone area map" },
-                    { src: "Research%20Project/Peta%20Kontur%20Gunung%20Rinjani.jpg", alt: "Mount Rinjani contour map" },
-                    { src: "Research%20Project/Peta%20Lokasi%20Penelitian.png", alt: "Research location map" },
-                    { src: "Research%20Project/Peta%20Persebaran%20Pemukiman.png", alt: "Settlement distribution map" },
-                    { src: "Research%20Project/Peta%20Zonasi%20KRB.png", alt: "Disaster-prone zone map" }
+                    { src: "Peta%20Kawasan%20Rawan%20Bencana%20Gunung%20Api%20Semeru.png", alt: "Semeru volcano disaster-prone area map" },
+                    { src: "Peta%20Kontur%20Gunung%20Rinjani.jpg", alt: "Mount Rinjani contour map" },
+                    { src: "Peta%20Lokasi%20Penelitian.png", alt: "Research location map" },
+                    { src: "Peta%20Persebaran%20Pemukiman.png", alt: "Settlement distribution map" },
+                    { src: "Peta%20Zonasi%20KRB.png", alt: "Disaster-prone zone map" }
                 ]
             },
             project6: {
@@ -1028,10 +1015,10 @@
                 desc: "I conducted comprehensive audits of historical spatial data from 2022–2025 across nine plantation subsidiaries. I identified and resolved topology errors, boundary mismatches, data inconsistencies, and digitizing issues, and developed standardized spatial data validation and QA/QC SOPs.",
                 results: "I produced strategic thematic maps covering land use, planting blocks, infrastructure, and legal boundaries to support operational decision-making. I also led the preparation of plantation cadastral map drafts to strengthen land legality and align spatial data with licensing documents.",
                 images: [
-                    { src: "Plantation%20%26%20GIS/WhatsApp%20Image%202026-10-09%20at%2016.18.28.jpeg", alt: "Plantation GIS map" },
-                    { src: "Plantation%20%26%20GIS/WhatsApp%20Image%202026-10-09%20at%2016.18.28%20%281%29.jpeg", alt: "Plantation spatial data and map" },
-                    { src: "Plantation%20%26%20GIS/WhatsApp%20Image%202026-10-09%20at%2016.18.28%20%282%29.jpeg", alt: "Plantation GIS audit documentation" },
-                    { src: "Plantation%20%26%20GIS/WhatsApp%20Image%202026-10-09%20at%2016.18.32.jpeg", alt: "Plantation cadastral mapping documentation" }
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.18.28.jpeg", alt: "Plantation GIS map" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.18.28%20(1).jpeg", alt: "Plantation spatial data and map" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.18.28%20(2).jpeg", alt: "Plantation GIS audit documentation" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.18.32.jpeg", alt: "Plantation cadastral mapping documentation" }
                 ]
             },
             project7: {
@@ -1040,9 +1027,9 @@
                 desc: "Conducted spatial analysis and mapping of fire hazard, vulnerability, and risk indices across West Kalimantan.",
                 results: "Produced spatial index outputs to support the assessment of fire hazard, vulnerability, and risk in West Kalimantan.",
                 images: [
-                    { src: "Indeks%20Kebakaran/Indeks%20Kebakaran%20Kalimantan_1.jpg", alt: "West Kalimantan fire index map 1" },
-                    { src: "Indeks%20Kebakaran/Indeks%20Kebakaran%20Kalimantan_2.jpg", alt: "West Kalimantan fire index map 2" },
-                    { src: "Indeks%20Kebakaran/Indeks%20Kebakaran%20Kalimantan_3.jpg", alt: "West Kalimantan fire index map 3" }
+                    { src: "Indeks%20Kebakaran%20Kalimantan_1.jpg", alt: "West Kalimantan fire index map 1" },
+                    { src: "Indeks%20Kebakaran%20Kalimantan_2.jpg", alt: "West Kalimantan fire index map 2" },
+                    { src: "Indeks%20Kebakaran%20Kalimantan_3.jpg", alt: "West Kalimantan fire index map 3" }
                 ]
             },
             project8: {
@@ -1051,10 +1038,10 @@
                 desc: "I analyzed fire hotspot locations alongside ERA5 single-level wind reanalysis data to assess wind direction and its potential influence on fire-spread direction.",
                 results: "Combined hotspot locations and wind-direction information to provide spatial context for fire monitoring and assessment.",
                 images: [
-                    { src: "Fire%20Hotspot%20dan%20ERA5/Hotspot.png", alt: "Fire hotspot and wind direction analysis" }
+                    { src: "Hotspot.png", alt: "Fire hotspot and wind direction analysis" }
                 ],
                 videos: [
-                    { src: "Fire%20Hotspot%20dan%20ERA5/HOtspot.mp4", title: "Fire hotspot and ERA5 wind analysis video" }
+                    { src: "HOtspot.mp4", title: "Fire hotspot and ERA5 wind analysis video" }
                 ]
             },
             project9: {
@@ -1063,8 +1050,8 @@
                 desc: "I have served multiple times as a speaker and lecturer, delivering sessions about rocks and geology.",
                 results: "Shared knowledge about rocks and geology with audiences across multiple speaking and lecture sessions.",
                 images: [
-                    { src: "Lecturer/WhatsApp%20Image%202026-10-09%20at%2016.01.01.jpeg", alt: "Geology and rocks lecture session" },
-                    { src: "Lecturer/WhatsApp%20Image%202026-10-09%20at%2017.35.15.jpeg", alt: "Guest lecturer presenting about rocks" }
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2016.01.01.jpeg", alt: "Geology and rocks lecture session" },
+                    { src: "WhatsApp%20Image%202026-10-09%20at%2017.35.15.jpeg", alt: "Guest lecturer presenting about rocks" }
                 ]
             },
             project10: {
@@ -1073,9 +1060,9 @@
                 desc: "I work as a GIS Content Creator at Neo Mapper, creating content focused on GIS and geospatial topics.",
                 results: "Contribute geospatial knowledge and insights through GIS-focused content for Neo Mapper.",
                 images: [
-                    { src: "Neo%20Mapper/Screenshot%202026-10-09%20174024_edited.png", alt: "GIS content created for Neo Mapper" }
+                    { src: "Screenshot%202026-10-09%20174024_edited.png", alt: "GIS content created for Neo Mapper" }
                 ]
-            },
+            }
         };
 
         function openModal(key) {
