@@ -75,6 +75,21 @@
         ::-webkit-scrollbar-thumb { background: #1e2d5a; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
     </style>
+    <script>
+        document.addEventListener('error', event => {
+            const image = event.target;
+            if (!(image instanceof HTMLImageElement) || image.dataset.rootFallbackAttempted) return;
+
+            const imageUrl = new URL(image.src, document.baseURI);
+            if (imageUrl.origin !== window.location.origin) return;
+
+            const filename = imageUrl.pathname.split('/').pop();
+            if (!filename) return;
+
+            image.dataset.rootFallbackAttempted = 'true';
+            image.src = new URL(filename, document.baseURI).href;
+        }, true);
+    </script>
 </head>
 <body class="bg-gis-dark text-slate-100 transition-colors duration-300 light:bg-slate-50 light:text-slate-800 relative">
 
@@ -965,7 +980,7 @@
                 desc: "I developed a WebGIS application for real-time asset registration, field verification, and spatial query reporting. I automated spatial overlay checks and custom vector layer analysis to flag potential conflicts, including land parcels overlapping forest areas and other restricted zones, so they could be addressed before becoming future issues.",
                 results: "My work increased field audit efficiency by 40%, enabled instant geospatial data access across multi-disciplinary teams, and helped prevent future spatial conflicts through automated overlay analysis.",
                 images: [
-                    { src: "WebGIS/Screenshot%202026-10-09%20171833_edited.png", alt: "WebGIS application screenshot" },
+                    { src: "WebGIS/Screenshot%202026-10-09%20172011_edited.png", alt: "WebGIS application screenshot" },
                     { src: "WebGIS/Screenshot%202026-10-09%20172011_edited.png", alt: "WebGIS application map and interface" },
                     { src: "WebGIS/Belajar%20WEBGIS%20Visual%20Studio%20Code.png", alt: "WebGIS development workspace" }
                 ]
